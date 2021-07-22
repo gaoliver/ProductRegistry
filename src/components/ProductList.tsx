@@ -8,16 +8,18 @@ interface Products {
     price: number;
     quantity: number;
     image: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 interface Props {
-    products?: Array<Products>;
+    products: Array<Products>;
 }
 
 const ProductList = ({ products }: Props) => {
     return (
         <View style={styles.list}>
-            {products?.map((x) => (
+            {products.map((x) => (
                 // Produto
                 <View style={styles.productBox} key={x.id}>
                     {/* Imagem */}
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
         // iOS
         shadowColor: '#000',
         shadowRadius: 3,
-        shadowOpacity: 0.4,
+        shadowOpacity: 0.3,
         shadowOffset: {
             height: 1,
             width: 0

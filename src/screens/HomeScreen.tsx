@@ -21,7 +21,11 @@ const HomeScreen = () => {
 
     // Obter lista de produtos
     useEffect(() => {
-        HttpService.list('products').then((data) => setProducts(data));
+        HttpService.list('products').then((data) => {
+            setProducts(data);
+            console.log(data);
+        });
+        console.log(products);
     }, []);
 
     return (
