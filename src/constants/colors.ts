@@ -4,5 +4,7 @@ export const colors = {
     background: "#ccc",
     text: "#333",
     grey: "grey",
-    accentText: "white"
+    accentText: "white",
+
+    boxBackground: "#FFF"
 }
