@@ -30,19 +30,15 @@ const HomeScreen = () => {
         getProducts();
     }, []);
 
-    const styles = StyleSheet.create({
-        button: {
-            marginTop: 30,
-            padding: 20,
-            borderRadius: 5
-        }
-    });
-
     return (
         <MainContainer>
             <MainHeader title="Product Registry" />
             <MainContent>
-                {loading ? <Text>Hey</Text> : <ProductList products={listProducts} />}
+                {loading ? (
+                    <Text>Hey</Text>
+                ) : (
+                    <ProductList products={listProducts} />
+                )}
             </MainContent>
         </MainContainer>
     );
