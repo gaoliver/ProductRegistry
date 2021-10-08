@@ -5,7 +5,7 @@ import { Searchbar } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 
 // Componentes
-import { colors } from '../constants/colors';
+import Colors from '../constants/Colors';
 
 interface Props {
     title?: string;
@@ -13,10 +13,39 @@ interface Props {
 
 const MainHeader = ({ title, ...props }: Props) => {
     const logo = require('../../assets/adaptive-icon.png');
+
+    const styles = StyleSheet.create({
+        header: {
+            backgroundColor: Colors.colors.primary
+        },
+        title: {
+            fontSize: 16,
+            fontWeight: 'bold'
+        },
+        logo: {
+            width: 45,
+            height: 75
+        },
+        sides: {
+            flex: 0.18,
+            marginHorizontal: 10
+        },
+        searchBar: {
+            width: '100%',
+            height: 40
+        },
+        inputStyleSearchBar: {
+            textAlign: 'left',
+            fontSize: 15,
+            paddingLeft: 0,
+            paddingRight: 0
+        }
+    });
+
     return (
         <Header
             style={styles.header}
-            androidStatusBarColor={colors.primary}
+            androidStatusBarColor={Colors.colors.primary}
             {...props}
         >
             {/* Esquerda */}
@@ -39,7 +68,7 @@ const MainHeader = ({ title, ...props }: Props) => {
                 <FontAwesome
                     name="user-circle-o"
                     size={40}
-                    color={colors.accentText}
+                    color={Colors.light.accentText}
                 />
             </Right>
         </Header>
@@ -47,31 +76,3 @@ const MainHeader = ({ title, ...props }: Props) => {
 };
 
 export default MainHeader;
-
-const styles = StyleSheet.create({
-    header: {
-        backgroundColor: colors.primary
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    },
-    logo: {
-        width: 45,
-        height: 75
-    },
-    sides: {
-        flex: 0.18,
-        marginHorizontal: 10
-    },
-    searchBar: {
-        width: '100%',
-        height: 40
-    },
-    inputStyleSearchBar: {
-        textAlign: 'left',
-        fontSize: 15,
-        paddingLeft: 0,
-        paddingRight: 0
-    }
-});

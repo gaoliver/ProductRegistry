@@ -1,10 +1,13 @@
-export const colors = {
-    primary: "green",
-    accent: "red",
-    background: "#ccc",
-    text: "#333",
-    grey: "grey",
-    accentText: "white",
-
-    boxBackground: "#FFF"
-}
+export default {
+    colors: {
+        primary: 'green',
+        accent: 'red',
+        grey: 'grey'
+    },
+    light: {
+        background: '#ccc',
+        text: '#333',
+        accentText: 'white',
+        boxBackground: '#FFF'
+    }
+};

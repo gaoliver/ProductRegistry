@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { colors } from '../constants/colors';
+import Colors from '../constants/Colors';
 
 interface Products {
     id: string;
@@ -17,6 +17,67 @@ interface Props {
 }
 
 const ProductList = ({ products }: Props) => {
+    const styles = StyleSheet.create({
+        list: {
+            width: '100%',
+            paddingHorizontal: 10
+        },
+
+        productBox: {
+            width: '100%',
+            height: 120,
+            marginVertical: 2,
+            padding: 20,
+            backgroundColor: Colors.light.boxBackground,
+            borderRadius: 5,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+
+            // Android
+            elevation: 3,
+
+            // iOS
+            shadowColor: '#000',
+            shadowRadius: 3,
+            shadowOpacity: 0.3,
+            shadowOffset: {
+                height: 1,
+                width: 0
+            }
+        },
+
+        image: {
+            width: '30%',
+            height: '100%',
+            backgroundColor: '#ccc'
+        },
+
+        infoSection: {
+            width: '70%',
+            height: '100%',
+            justifyContent: 'space-between',
+            paddingLeft: 20
+        },
+        title: {
+            fontSize: 15,
+            fontWeight: '500'
+        },
+        row: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'baseline'
+        },
+        price: {
+            fontSize: 20,
+            fontWeight: '500',
+            color: Colors.colors.accent
+        },
+        quantity: {
+            fontSize: 14,
+            color: Colors.colors.grey
+        }
+    });
+
     return (
         <View style={styles.list}>
             {products.map((x) => (
@@ -48,64 +109,3 @@ const ProductList = ({ products }: Props) => {
 };
 
 export default ProductList;
-
-const styles = StyleSheet.create({
-    list: {
-        width: '100%',
-        paddingHorizontal: 10
-    },
-
-    productBox: {
-        width: '100%',
-        height: 120,
-        marginVertical: 2,
-        padding: 20,
-        backgroundColor: colors.boxBackground,
-        borderRadius: 5,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-
-        // Android
-        elevation: 3,
-
-        // iOS
-        shadowColor: '#000',
-        shadowRadius: 3,
-        shadowOpacity: 0.3,
-        shadowOffset: {
-            height: 1,
-            width: 0
-        }
-    },
-
-    image: {
-        width: '30%',
-        height: '100%',
-        backgroundColor: '#ccc'
-    },
-
-    infoSection: {
-        width: '70%',
-        height: '100%',
-        justifyContent: 'space-between',
-        paddingLeft: 20
-    },
-    title: {
-        fontSize: 15,
-        fontWeight: '500'
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'baseline'
-    },
-    price: {
-        fontSize: 20,
-        fontWeight: '500',
-        color: colors.accent
-    },
-    quantity: {
-        fontSize: 14,
-        color: colors.grey
-    }
-});
