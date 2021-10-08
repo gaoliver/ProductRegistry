@@ -33,7 +33,7 @@ const HomeScreen = () => {
         const { getListProducts: service } = services;
         const result = await requester(service);
 
-        console.log(listProducts)
+        console.log(listProducts);
         dispatch(getListProducts(result));
 
         setLoading(false);

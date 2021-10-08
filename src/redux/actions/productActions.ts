@@ -13,9 +13,8 @@ export interface ErrorActionProduct {
 
 export type ProductAction = GetListProducts | ErrorActionProduct;
 
-export const getListProducts =
-    (value: Array<ProductModel>) =>
-    async (dispatch: Dispatch<ProductAction>) => {
+export const getListProducts = (value: Array<ProductModel>) => {
+    return async (dispatch: Dispatch<ProductAction>) => {
         try {
             dispatch({
                 type: 'ON_GET_LIST_PRODUCTS',
@@ -28,3 +27,4 @@ export const getListProducts =
             });
         }
     };
+};

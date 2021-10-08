@@ -17,8 +17,9 @@ export const ProductReducer = (
         case 'ON_GET_LIST_PRODUCTS':
             return {
                 ...state,
-                listProduct: action.payload
+                listProducts: action.payload
             };
+        default:
+            return state;
     }
-    return initialState;
 };
