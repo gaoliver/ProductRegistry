@@ -30,14 +30,9 @@ const HomeScreen = () => {
 
     return (
         <Container style={GlobalStyle.container}>
-            {/* Header */}
             <MainHeader title="Product Registry" />
-            {/* Screen body */}
             <Content contentContainerStyle={GlobalStyle.content}>
-                {/* Separador */}
                 <View style={{ width: 10, height: 5 }} />
-
-                {/* Lista de produtos */}
                 <ProductList products={products} />
             </Content>
         </Container>
