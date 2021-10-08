@@ -2,11 +2,11 @@ import { ProductModel } from '../../utils/types';
 import { ProductAction } from '../actions/productActions';
 
 type ProductStateModel = {
-    listProducts: Array<ProductModel> | undefined;
+    listProducts: Array<ProductModel>;
 };
 
 const initialState: ProductStateModel = {
-    listProducts: undefined
+    listProducts: []
 };
 
 export const ProductReducer = (
@@ -20,4 +20,5 @@ export const ProductReducer = (
                 listProduct: action.payload
             };
     }
+    return initialState;
 };

@@ -9,23 +9,38 @@ import {
     Right,
     View
 } from 'native-base';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Componentes
 import MainHeader from '../components/MainHeader';
 import GlobalStyle from '../constants/GlobalStyles';
 import ProductList from '../components/ProductList';
-import HttpService from '../service/HttpService';
+import HttpService from '../service/requester';
+import { ApplicationReducer, getListProducts } from '../redux';
+import services from '../service/service';
+import requester from '../service/requester';
 
 const HomeScreen = () => {
-    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const listProducts = useSelector(
+        (state: ApplicationReducer) => state.productReducer.listProducts
+    );
 
-    // Obter lista de produtos
+    const getProducts = async () => {
+        setLoading(true);
+
+        const { getListProducts: service } = services;
+        const result = await requester(service);
+
+        console.log(listProducts)
+        dispatch(getListProducts(result));
+
+        setLoading(false);
+    };
+
     useEffect(() => {
-        HttpService.list('products').then((data) => {
-            setProducts(data);
-            console.log(data);
-        });
-        console.log(products);
+        getProducts();
     }, []);
 
     return (
@@ -33,7 +48,7 @@ const HomeScreen = () => {
             <MainHeader title="Product Registry" />
             <Content contentContainerStyle={GlobalStyle.content}>
                 <View style={{ width: 10, height: 5 }} />
-                <ProductList products={products} />
+                <ProductList products={listProducts} />
             </Content>
         </Container>
     );
