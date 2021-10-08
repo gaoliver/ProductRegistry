@@ -12,36 +12,33 @@ import MainContainer from '../components/MainContainer';
 import MainContent from '../components/MainContent';
 
 const HomeScreen = () => {
-    const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
-    const listProducts = useSelector(
-        (state: ApplicationReducer) => state.productReducer.listProducts
-    );
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const listProducts = useSelector(
+    (state: ApplicationReducer) => state.productReducer.listProducts
+  );
 
-    const getProducts = async () => {
-        setLoading(true);
-        const { getListProducts: service } = services;
-        const result = await requester(service);
-        dispatch(getListProducts(result));
-        setLoading(false);
-    };
+  const getProducts = async () => {
+    setLoading(true);
+    const { getListProducts: service } = services;
+    const result = await requester(service);
+    dispatch(getListProducts(result));
+    setLoading(false);
+  };
 
-    useEffect(() => {
-        getProducts();
-    }, []);
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-    return (
-        <MainContainer>
-            <MainHeader title="Product Registry" />
-            <MainContent>
-                {loading ? (
-                    <Text>Hey</Text>
-                ) : (
-                    <ProductList products={listProducts} />
-                )}
-            </MainContent>
-        </MainContainer>
-    );
+  return (
+    <MainContainer>
+      <MainHeader title="Product Registry" />
+      <MainContent loadingIndicator={loading} loadAction={getProducts}>
+        {/* {loading ? <Text>Hey</Text> : <ProductList products={listProducts} />} */}
+        <ProductList products={listProducts} />
+      </MainContent>
+    </MainContainer>
+  );
 };
 
 export default HomeScreen;

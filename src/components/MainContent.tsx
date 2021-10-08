@@ -1,15 +1,35 @@
-import { Content, View } from 'native-base';
+import { Content } from 'native-base';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
+interface MainContentProps {
+  loadingIndicator?: boolean;
+  loadAction?: () => void;
+}
 
-const MainContent: React.FC = ({ children }) => {
+const MainContent: React.FC<MainContentProps> = ({
+  loadingIndicator,
+  loadAction,
+  children
+}) => {
+  const loading = loadingIndicator || false;
+
   const styles = StyleSheet.create({
     content: {
       flex: 1,
       padding: 10
     }
   });
-  return <Content contentContainerStyle={styles.content}>{children}</Content>;
+
+  return (
+    <Content
+      contentContainerStyle={styles.content}
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={loadAction} />
+      }
+    >
+      {children}
+    </Content>
+  );
 };
 
 export default MainContent;
