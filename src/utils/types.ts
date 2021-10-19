@@ -1,3 +1,5 @@
+import { StackNavigationProp } from "@react-navigation/stack";
+
 export enum RequesterMethodEnum {
   GET = 'GET',
   POST = 'POST',
@@ -20,6 +22,8 @@ export type ProductModel = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
 
 export type StackParamList = {
   Home: undefined;

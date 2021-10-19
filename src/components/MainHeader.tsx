@@ -1,15 +1,12 @@
 import React from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { Body, Header, Left, Right } from 'native-base';
 import { Searchbar } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import Colors from '../constants/Colors';
-import { StackParamList } from '../utils/types';
-
-type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+import { NavigationProp } from '../utils/types';
 
 interface Props {
   title?: string;

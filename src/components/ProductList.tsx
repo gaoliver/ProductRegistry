@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import Colors from '../constants/Colors';
 
 interface Products {
@@ -14,12 +14,13 @@ interface Products {
 
 interface Props {
   products: Array<Products>;
+  onPress: () => void;
 }
 
-const ProductList = ({ products }: Props) => {
+const ProductList = ({ products, onPress }: Props) => {
   const styles = StyleSheet.create({
     list: {
-      width: '100%',
+      width: '100%'
     },
 
     productBox: {
@@ -80,7 +81,7 @@ const ProductList = ({ products }: Props) => {
   return (
     <View style={styles.list}>
       {products.map((x) => (
-        <View style={styles.productBox} key={x.id}>
+        <Pressable style={styles.productBox} key={x.id} onPress={onPress}>
           <Image source={{}} style={styles.image} />
           <View style={styles.infoSection}>
             <Text style={styles.title} numberOfLines={2}>
@@ -91,7 +92,7 @@ const ProductList = ({ products }: Props) => {
               <Text style={styles.quantity}>{`Quantidade: ${x.quantity}`}</Text>
             </View>
           </View>
-        </View>
+        </Pressable>
       ))}
     </View>
   );

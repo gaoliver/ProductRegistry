@@ -10,8 +10,13 @@ import services from '../service/service';
 import requester from '../service/requester';
 import MainContainer from '../components/MainContainer';
 import MainContent from '../components/MainContent';
+import { NavigationProp } from '../utils/types';
 
-const HomeScreen = () => {
+interface IHomeProps {
+  navigation: NavigationProp;
+}
+
+const HomeScreen = ({ navigation }: IHomeProps) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const listProducts = useSelector(
@@ -26,6 +31,10 @@ const HomeScreen = () => {
     setLoading(false);
   };
 
+  const onPressProduct = () => {
+    navigation.navigate('Product');
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -33,7 +42,7 @@ const HomeScreen = () => {
   return (
     <MainContainer>
       <MainContent loadingIndicator={loading} loadAction={getProducts}>
-        <ProductList products={listProducts} />
+        <ProductList products={listProducts} onPress={onPressProduct} />
       </MainContent>
     </MainContainer>
   );
