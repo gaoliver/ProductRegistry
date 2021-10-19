@@ -22,7 +22,7 @@ const LimitHeader: React.FC<IProps> = ({ title, children }) => {
 
   const styles = StyleSheet.create({
     headerContainer: {
-      height: 120,
+      height: 150,
       flexDirection: 'column',
       paddingLeft: 0,
       paddingRight: 0,
