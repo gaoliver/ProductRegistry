@@ -33,7 +33,6 @@ const HomeScreen = () => {
   return (
     <MainContainer>
       <MainContent loadingIndicator={loading} loadAction={getProducts}>
-        {/* {loading ? <Text>Hey</Text> : <ProductList products={listProducts} />} */}
         <ProductList products={listProducts} />
       </MainContent>
     </MainContainer>

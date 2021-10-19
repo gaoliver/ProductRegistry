@@ -24,4 +24,5 @@ export type ProductModel = {
 export type StackParamList = {
   Home: undefined;
   Profile: undefined;
+  Product: undefined;
 };

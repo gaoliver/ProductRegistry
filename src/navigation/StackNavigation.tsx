@@ -9,6 +9,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StackParamList } from '../utils/types';
 import HomeScreen from '../screens/HomeScreen';
 import MainHeader from '../components/MainHeader';
+import ProfileScreen from '../screens/ProfileScreen';
+import ProductScreen from '../screens/ProductScreen';
 
 const Stack = createStackNavigator<StackParamList>();
 
@@ -24,7 +26,8 @@ const StackNavigation = () => {
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Profile" component={HomeScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Product" component={ProductScreen} />
       </Stack.Navigator>
     </>
   );

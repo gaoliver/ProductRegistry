@@ -3,16 +3,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import MainContent from '../components/MainContent';
 
-const ProfileScreen = () => {
+const ProductScreen = () => {
   const styles = StyleSheet.create({});
 
   return (
     <MainContainer>
       <MainContent>
-        <Text>Olá</Text>
+        <Text>Product</Text>
       </MainContent>
     </MainContainer>
   );
 };
 
-export default ProfileScreen;
+export default ProductScreen;
