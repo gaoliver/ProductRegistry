@@ -3,22 +3,16 @@ import { Image, StyleSheet, Text } from 'react-native';
 import { Body, Header, Left, Right } from 'native-base';
 import { Searchbar } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 
 import Colors from '../constants/Colors';
-import { NavigationProp } from '../utils/types';
 
 interface Props {
   title?: string | null;
+  onPress: () => void;
 }
 
-const MainHeader = ({ title, ...props }: Props) => {
+const MainHeader = ({ title, onPress, ...props }: Props) => {
   const logo = require('../../assets/adaptive-icon.png');
-  const navigation = useNavigation<NavigationProp>();
-
-  const onProfilePress = () => {
-    navigation.navigate('Profile');
-  };
 
   const styles = StyleSheet.create({
     header: {
@@ -81,7 +75,7 @@ const MainHeader = ({ title, ...props }: Props) => {
           name="user-circle-o"
           size={40}
           color={Colors.light.accentText}
-          onPress={onProfilePress}
+          onPress={onPress}
         />
       </Right>
     </Header>
