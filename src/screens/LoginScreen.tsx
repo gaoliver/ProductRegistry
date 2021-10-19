@@ -55,7 +55,7 @@ const LoginScreen = ({ navigation }: IProps) => {
 
   const styles = StyleSheet.create({
     content: {
-      justifyContent: 'center',
+      paddingTop: 150,
       alignItems: 'center'
     },
     form: {
