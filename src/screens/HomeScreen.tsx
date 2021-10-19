@@ -32,7 +32,6 @@ const HomeScreen = () => {
 
   return (
     <MainContainer>
-      <MainHeader title="Product Registry" />
       <MainContent loadingIndicator={loading} loadAction={getProducts}>
         {/* {loading ? <Text>Hey</Text> : <ProductList products={listProducts} />} */}
         <ProductList products={listProducts} />
