@@ -2,14 +2,24 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Header } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import Colors from '../constants/Colors';
+import { StackParamList } from '../utils/types';
 
+type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
 interface IProps {
   title: string;
 }
 
 const LimitHeader: React.FC<IProps> = ({ title, children }) => {
+  const navigation = useNavigation<NavigationProp>();
+
+  const onGoBack = () => {
+    navigation.goBack();
+  };
+
   const styles = StyleSheet.create({
     headerContainer: {
       height: 120,
@@ -54,10 +64,14 @@ const LimitHeader: React.FC<IProps> = ({ title, children }) => {
       androidStatusBarColor={Colors.light.statusbar}
     >
       <View style={styles.largeSpace}>
-        <Pressable style={styles.backContainer}>
+        <Pressable style={styles.backContainer} onPress={onGoBack}>
           <Text style={styles.back}>
-            <Ionicons name="chevron-back" color={Colors.light.accentText} size={20} />
-            </Text>
+            <Ionicons
+              name="chevron-back"
+              color={Colors.light.accentText}
+              size={20}
+            />
+          </Text>
         </Pressable>
       </View>
       <View style={styles.titleRow}>
