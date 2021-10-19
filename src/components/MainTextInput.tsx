@@ -45,7 +45,7 @@ const MainTextInput = (props: IProps) => {
   const [color, setColor] = useState(Colors.colors.grey);
 
   const verifyStatus = () => {
-    if (status === IVerifyField.empty) {
+    if (status === IVerifyField.ok) {
       setColor(Colors.colors.primary);
       setShowWarning(false);
     } else if (status === IVerifyField.wrong) {

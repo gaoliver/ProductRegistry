@@ -7,47 +7,45 @@ import MainContainer from '../components/MainContainer';
 import MainContent from '../components/MainContent';
 import { IVerifyField, StackParamList } from '../utils/types';
 import MainTextInput from '../components/MainTextInput';
+import MainButton from '../components/MainButton';
 
 interface IProps {
   navigation: StackNavigationProp<StackParamList, 'Login'>;
 }
 
-interface ILoginValues {
-  email: string;
-  password: string;
-}
-
-interface IWarning {
-  email: IVerifyField;
-  password: IVerifyField;
-}
-
 const LoginScreen = ({ navigation }: IProps) => {
-  const [login, setLogin] = useState<ILoginValues>({
-    email: '',
-    password: ''
-  });
-  const [warning, setWarning] = useState<IWarning>({
-    email: IVerifyField.empty,
-    password: IVerifyField.empty
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [emailWarning, setEmailWarning] = useState<IVerifyField>();
+  const [passwordWarning, setPasswordWarning] = useState<IVerifyField>();
 
   const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
 
-  const verifyFields = () => {
-    let emailOk = false;
-    let passwordOk = false;
+  const verifyEmail = () => {
+    setEmailWarning(IVerifyField.empty);
+  };
+  const verifyPassword = () => {
+    setPasswordWarning(IVerifyField.empty);
+  };
 
-    if (login.email === '') {
-      IVerifyField.wrong;
-      setWarning({ ...warning, email: IVerifyField.wrong });
+  const verifyFields = () => {
+    let emailOk;
+    let passwordOk;
+
+    if (email === '') {
+      setEmailWarning(IVerifyField.wrong);
       emailOk = false;
+    } else {
+      emailOk = true;
     }
-    if (login.password === '') {
-      IVerifyField.wrong;
-      setWarning({ ...warning, password: IVerifyField.wrong });
+
+    if (password === '') {
+      setPasswordWarning(IVerifyField.wrong);
       passwordOk = false;
+    } else {
+      passwordOk = true;
     }
 
     if (emailOk && passwordOk) {
@@ -62,7 +60,7 @@ const LoginScreen = ({ navigation }: IProps) => {
     },
     form: {
       width: '80%',
-      height: 300,
+      height: 235,
       padding: 15,
       justifyContent: 'center',
       alignItems: 'center',
@@ -75,6 +73,10 @@ const LoginScreen = ({ navigation }: IProps) => {
       },
       shadowRadius: 3,
       shadowOpacity: 0.3
+    },
+    buttonsField: {
+      width: '100%',
+      marginTop: 10
     }
   });
 
@@ -84,12 +86,13 @@ const LoginScreen = ({ navigation }: IProps) => {
       <MainContent contentStyle={styles.content}>
         <View style={styles.form}>
           <MainTextInput
-            value={login.email}
+            value={email}
             label="E-mail"
             inputRef={emailRef}
-            status={warning.email}
-            onChangeText={(text) => setLogin({ ...login, email: text })}
+            status={emailWarning}
+            onChangeText={(text) => setEmail(text)}
             inputProps={{
+              onBlur: verifyEmail,
               autoCompleteType: 'email',
               textContentType: 'emailAddress',
               keyboardType: 'email-address',
@@ -98,16 +101,20 @@ const LoginScreen = ({ navigation }: IProps) => {
             }}
           />
           <MainTextInput
-            value={login.password}
+            value={password}
             label="Senha"
             inputRef={passwordRef}
-            status={warning.password}
-            onChangeText={(text) => setLogin({ ...login, password: text })}
+            status={passwordWarning}
+            onChangeText={(text) => setPassword(text)}
             inputProps={{
+              onBlur: verifyPassword,
               secureTextEntry: true,
               returnKeyType: 'done'
             }}
           />
+          <View style={styles.buttonsField}>
+            <MainButton text="Login" onPress={verifyFields} />
+          </View>
         </View>
       </MainContent>
     </MainContainer>
