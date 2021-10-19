@@ -27,6 +27,13 @@ export type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
 
 export type StackParamList = {
   Home: undefined;
+  Login: undefined;
+  SignIn: undefined;
   Profile: undefined;
+  EditProfile: undefined;
+  MyProducts: undefined;
   Product: undefined;
+  Menu: undefined;
+  CreateProduct: undefined;
+  EditProduct: undefined;
 };

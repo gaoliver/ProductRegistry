@@ -11,10 +11,26 @@ import HomeScreen from '../screens/HomeScreen';
 import MainHeader from '../components/MainHeader';
 import ProfileScreen from '../screens/ProfileScreen';
 import ProductScreen from '../screens/ProductScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createStackNavigator<StackParamList>();
 
 const StackNavigation = () => {
+  return (
+    <>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        initialRouteName="Home"
+      >
+        <Stack.Screen name="Home" component={MainStackNavigation} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+      </Stack.Navigator>
+    </>
+  );
+};
+
+const MainStackNavigation = () => {
   const route: RouteProp<StackParamList, 'Home'> = useRoute();
   const routeName = getFocusedRouteNameFromRoute(route);
 
@@ -28,7 +44,6 @@ const StackNavigation = () => {
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Product" component={ProductScreen} />
       </Stack.Navigator>
     </>
