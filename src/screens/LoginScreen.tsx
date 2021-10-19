@@ -97,6 +97,7 @@ const LoginScreen = ({ navigation }: IProps) => {
               textContentType: 'emailAddress',
               keyboardType: 'email-address',
               returnKeyType: 'next',
+              autoCapitalize: "none",
               onSubmitEditing: () => passwordRef.current.focus()
             }}
           />
