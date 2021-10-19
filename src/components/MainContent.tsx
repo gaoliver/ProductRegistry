@@ -1,14 +1,16 @@
 import { Content } from 'native-base';
 import React from 'react';
-import { RefreshControl, StyleSheet } from 'react-native';
+import { RefreshControl, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 interface MainContentProps {
   loadingIndicator?: boolean;
   loadAction?: () => void;
+  contentStyle?: StyleProp<ViewStyle>;
 }
 
 const MainContent: React.FC<MainContentProps> = ({
   loadingIndicator,
   loadAction,
+  contentStyle,
   children
 }) => {
   const loading = loadingIndicator || false;
@@ -22,7 +24,7 @@ const MainContent: React.FC<MainContentProps> = ({
 
   return (
     <Content
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[styles.content, contentStyle]}
       refreshControl={
         <RefreshControl refreshing={loading} onRefresh={loadAction} />
       }

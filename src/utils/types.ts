@@ -1,4 +1,4 @@
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export enum RequesterMethodEnum {
   GET = 'GET',
@@ -37,3 +37,9 @@ export type StackParamList = {
   CreateProduct: undefined;
   EditProduct: undefined;
 };
+
+export enum IVerifyField {
+  'empty',
+  'wrong',
+  'ok'
+}
