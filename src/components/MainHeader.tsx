@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, Text } from 'react-native';
 import { Body, Header, Left, Right } from 'native-base';
 import { Searchbar } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
@@ -9,7 +9,7 @@ import Colors from '../constants/Colors';
 import { NavigationProp } from '../utils/types';
 
 interface Props {
-  title?: string;
+  title?: string | null;
 }
 
 const MainHeader = ({ title, ...props }: Props) => {
@@ -45,6 +45,11 @@ const MainHeader = ({ title, ...props }: Props) => {
       fontSize: 15,
       paddingLeft: 0,
       paddingRight: 0
+    },
+    screenTitle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: Colors.light.accentText
     }
   });
 
@@ -59,12 +64,16 @@ const MainHeader = ({ title, ...props }: Props) => {
       </Left>
 
       <Body>
-        <Searchbar
-          value=""
-          placeholder="Pesquisa seu produto"
-          style={styles.searchBar}
-          inputStyle={styles.inputStyleSearchBar}
-        />
+        {!title ? (
+          <Searchbar
+            value=""
+            placeholder="Pesquisa seu produto"
+            style={styles.searchBar}
+            inputStyle={styles.inputStyleSearchBar}
+          />
+        ) : (
+          <Text style={styles.screenTitle}>{title}</Text>
+        )}
       </Body>
 
       <Right style={styles.sides}>

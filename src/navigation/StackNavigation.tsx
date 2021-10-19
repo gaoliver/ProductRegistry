@@ -18,9 +18,11 @@ const StackNavigation = () => {
   const route: RouteProp<StackParamList, 'Home'> = useRoute();
   const routeName = getFocusedRouteNameFromRoute(route);
 
+  const name = routeName === 'Profile' ? routeName : null;
+
   return (
     <>
-      <MainHeader title={routeName} />
+      <MainHeader title={name} />
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{ headerShown: false }}
