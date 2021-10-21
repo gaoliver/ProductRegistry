@@ -1,55 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { Appearance, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import {
-    Body,
-    Container,
-    Content,
-    Header,
-    Left,
-    Right,
-    View
-} from 'native-base';
+import { StyleSheet, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Componentes
 import MainHeader from '../components/MainHeader';
-import GlobalStyle from '../constants/GlobalStyles';
 import ProductList from '../components/ProductList';
-import HttpService from '../service/HttpService';
+import { ApplicationReducer, getListProducts } from '../redux';
+import services from '../service/service';
+import requester from '../service/requester';
+import MainContainer from '../components/MainContainer';
+import MainContent from '../components/MainContent';
+import { NavigationProp } from '../utils/types';
 
-const HomeScreen = () => {
-    const [products, setProducts] = useState([]);
+interface IHomeProps {
+  navigation: NavigationProp;
+}
 
-    // Obter lista de produtos
-    useEffect(() => {
-        HttpService.list('products').then((data) => {
-            setProducts(data);
-            console.log(data);
-        });
-        console.log(products);
-    }, []);
+const HomeScreen = ({ navigation }: IHomeProps) => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const listProducts = useSelector(
+    (state: ApplicationReducer) => state.productReducer.listProducts
+  );
 
-    return (
-        <Container style={GlobalStyle.container}>
-            {/* Header */}
-            <MainHeader title="Product Registry" />
-            {/* Screen body */}
-            <Content contentContainerStyle={GlobalStyle.content}>
-                {/* Separador */}
-                <View style={{ width: 10, height: 5 }} />
+  const getProducts = async () => {
+    setLoading(true);
+    const { getListProducts: service } = services;
+    const result = await requester(service);
+    dispatch(getListProducts(result));
+    setLoading(false);
+  };
 
-                {/* Lista de produtos */}
-                <ProductList products={products} />
-            </Content>
-        </Container>
-    );
+  const onPressProduct = () => {
+    navigation.navigate('Product');
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  return (
+    <MainContainer>
+      <MainContent loadingIndicator={loading} loadAction={getProducts}>
+        <ProductList products={listProducts} onPress={onPressProduct} />
+      </MainContent>
+    </MainContainer>
+  );
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-    button: {
-        marginTop: 30,
-        padding: 20,
-        borderRadius: 5
-    }
-});
