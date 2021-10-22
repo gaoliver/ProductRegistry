@@ -8,6 +8,7 @@ import {
   createStackNavigator,
   StackNavigationProp
 } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 
 import { MainParamList, StackParamList } from '../utils/types';
 import HomeScreen from '../screens/HomeScreen';
@@ -15,8 +16,8 @@ import MainHeader from '../components/MainHeader';
 import ProfileScreen from '../screens/ProfileScreen';
 import ProductScreen from '../screens/ProductScreen';
 import LoginScreen from '../screens/LoginScreen';
-import LimitHeader from '../components/LimitHeader';
 import SignUpScreen from '../screens/SignUpScreen';
+import { ApplicationReducer } from '../redux/reducers';
 
 const Stack = createStackNavigator<StackParamList>();
 const MainStack = createStackNavigator<MainParamList>();
@@ -41,12 +42,13 @@ type MainNavigationProps = StackNavigationProp<MainParamList, "Home">;
 type MainStackProps = { navigation: MainNavigationProps };
 
 const MainStackNavigation = ({ navigation }: MainStackProps) => {
+  const { user } = useSelector((state: ApplicationReducer) => state.userReducer)
   const route: RouteProp<MainParamList, 'Home'> = useRoute();
   const routeName = getFocusedRouteNameFromRoute(route);
   const name = routeName === 'Profile' ? routeName : null;
 
   const onProfilePress = () => {
-    navigation.navigate('Home', { screen: "Login" });
+    navigation.navigate('Home', { screen: user ? "Profile" : "Login" });
   };
 
   return (

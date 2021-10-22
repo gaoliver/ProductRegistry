@@ -2,11 +2,17 @@ import { UserModel } from '../../utils/types';
 import { UserAction } from '../actions/userActions';
 
 type UserStateModel = {
-  user: UserModel | undefined;
+  user: UserModel;
 };
 
 const initialState: UserStateModel = {
-  user: undefined,
+  user: {
+    id: undefined,
+    name: '',
+    email: '',
+    password: '',
+    avatar: undefined
+  }
 };
 
 export const UserReducer = (
