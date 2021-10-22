@@ -24,13 +24,23 @@ export type ProductModel = {
   updatedAt: string;
 };
 
+export type UserModel = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  avatar: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type NavigationProp = StackNavigationProp<StackParamList, 'MainHome'>;
 export type MainNavigationProp = StackNavigationProp<MainParamList, 'Home'>;
 
 export type StackParamList = {
   MainHome: MainParamList;
   Login: undefined;
-  SignIn: undefined;
+  SignUp: undefined;
   Profile: undefined;
   EditProfile: undefined;
   MyProducts: undefined;

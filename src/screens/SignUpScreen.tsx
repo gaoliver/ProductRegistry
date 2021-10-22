@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import LimitHeader from '../components/LimitHeader';
 import MainContainer from '../components/MainContainer';
@@ -8,14 +8,12 @@ import MainContent from '../components/MainContent';
 import { IVerifyField, StackParamList } from '../utils/types';
 import MainTextInput from '../components/MainTextInput';
 import MainButton from '../components/MainButton';
-import Colors from '../constants/Colors';
-import MainBox from '../components/MainBox';
 
 interface IProps {
   navigation: StackNavigationProp<StackParamList, 'Login'>;
 }
 
-const LoginScreen = ({ navigation }: IProps) => {
+const SignUpScreen = ({ navigation }: IProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -60,21 +58,33 @@ const LoginScreen = ({ navigation }: IProps) => {
       paddingTop: 150,
       alignItems: 'center'
     },
+    form: {
+      width: '80%',
+      height: 235,
+      padding: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      backgroundColor: '#ddd',
+      elevation: 3,
+      shadowOffset: {
+        height: 0,
+        width: 0
+      },
+      shadowRadius: 3,
+      shadowOpacity: 0.3
+    },
     buttonsField: {
       width: '100%',
       marginTop: 10
-    },
-    signUp: {
-      marginTop: 20,
-      alignSelf: 'flex-end'
     }
   });
 
   return (
     <MainContainer>
-      <LimitHeader title="Login" />
+      <LimitHeader title="Sign Up" />
       <MainContent contentStyle={styles.content}>
-        <MainBox>
+        <View style={styles.form}>
           <MainTextInput
             value={email}
             label="E-mail"
@@ -87,7 +97,7 @@ const LoginScreen = ({ navigation }: IProps) => {
               textContentType: 'emailAddress',
               keyboardType: 'email-address',
               returnKeyType: 'next',
-              autoCapitalize: 'none',
+              autoCapitalize: "none",
               onSubmitEditing: () => passwordRef.current.focus()
             }}
           />
@@ -105,21 +115,11 @@ const LoginScreen = ({ navigation }: IProps) => {
           />
           <View style={styles.buttonsField}>
             <MainButton text="Login" onPress={verifyFields} />
-            <Text style={styles.signUp}>
-              Already not registered?{' '}
-              <Text
-                onPress={() => navigation.navigate('SignUp')}
-                style={{ color: Colors.light.links }}
-              >
-                Sign up
-              </Text>
-              .
-            </Text>
           </View>
-        </MainBox>
+        </View>
       </MainContent>
     </MainContainer>
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;

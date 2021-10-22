@@ -16,6 +16,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import ProductScreen from '../screens/ProductScreen';
 import LoginScreen from '../screens/LoginScreen';
 import LimitHeader from '../components/LimitHeader';
+import SignUpScreen from '../screens/SignUpScreen';
 
 const Stack = createStackNavigator<StackParamList>();
 const MainStack = createStackNavigator<MainParamList>();
@@ -29,6 +30,7 @@ const StackNavigation = () => {
       >
         <Stack.Screen name="MainHome" component={MainStackNavigation} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </>
