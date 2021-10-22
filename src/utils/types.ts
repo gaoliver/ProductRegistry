@@ -1,3 +1,4 @@
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 export enum RequesterMethodEnum {
@@ -23,19 +24,24 @@ export type ProductModel = {
   updatedAt: string;
 };
 
-export type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+export type NavigationProp = StackNavigationProp<StackParamList, 'MainHome'>;
+export type MainNavigationProp = StackNavigationProp<MainParamList, 'Home'>;
 
 export type StackParamList = {
-  Home: undefined;
+  MainHome: MainParamList;
   Login: undefined;
   SignIn: undefined;
   Profile: undefined;
   EditProfile: undefined;
   MyProducts: undefined;
-  Product: undefined;
   Menu: undefined;
   CreateProduct: undefined;
   EditProduct: undefined;
+};
+
+export type MainParamList = {
+  Home: NavigatorScreenParams<StackParamList>;
+  Product: undefined;
 };
 
 export enum IVerifyField {
