@@ -106,12 +106,12 @@ const LoginScreen = ({ navigation }: IProps) => {
           <View style={styles.buttonsField}>
             <MainButton text="Login" onPress={verifyFields} />
             <Text style={styles.signUp}>
-              Already not registered?{' '}
+              Ainda não tem conta?{' '}
               <Text
                 onPress={() => navigation.navigate('SignUp')}
                 style={{ color: Colors.light.links }}
               >
-                Sign up
+                Cadastre-se
               </Text>
               .
             </Text>

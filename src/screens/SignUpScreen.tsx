@@ -26,10 +26,13 @@ const SignUpScreen = ({ navigation }: IProps) => {
   const [nameWarning, setNameWarning] = useState<IVerifyField>();
   const [emailWarning, setEmailWarning] = useState<IVerifyField>();
   const [passwordWarning, setPasswordWarning] = useState<IVerifyField>();
+  const [confirmPsswdWarning, setConfirmPsswdWarning] =
+    useState<IVerifyField>();
 
   const nameRef = useRef<any>(null);
   const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
+  const confirmPsswdRef = useRef<any>(null);
 
   const verifyName = () => {
     setNameWarning(IVerifyField.empty);
@@ -41,10 +44,15 @@ const SignUpScreen = ({ navigation }: IProps) => {
     setPasswordWarning(IVerifyField.empty);
   };
 
+  const verifyConfirmPsswd = () => {
+    setConfirmPsswdWarning(IVerifyField.empty);
+  };
+
   const verifyFields = () => {
     let nameOk;
     let emailOk;
     let passwordOk;
+    let confirmPsswdOk;
 
     if (user.name === '') {
       setNameWarning(IVerifyField.wrong);
@@ -52,7 +60,7 @@ const SignUpScreen = ({ navigation }: IProps) => {
     } else {
       nameOk = true;
     }
-    
+
     if (user.email === '') {
       setEmailWarning(IVerifyField.wrong);
       emailOk = false;
@@ -67,7 +75,14 @@ const SignUpScreen = ({ navigation }: IProps) => {
       passwordOk = true;
     }
 
-    if (emailOk && passwordOk && nameOk) {
+    if (confirmPsswd === '') {
+      setConfirmPsswdWarning(IVerifyField.wrong);
+      confirmPsswdOk = false;
+    } else {
+      confirmPsswdOk = true;
+    }
+
+    if (emailOk && passwordOk && nameOk && confirmPsswdOk) {
       console.warn('Account created!');
     }
   };
@@ -95,9 +110,9 @@ const SignUpScreen = ({ navigation }: IProps) => {
             status={nameWarning}
             onChangeText={(text) => setUser({ ...user, name: text })}
             inputProps={{
-              onBlur: verifyEmail,
+              onBlur: verifyName,
               autoCompleteType: 'name',
-              textContentType: "name",
+              textContentType: 'name',
               returnKeyType: 'next',
               autoCapitalize: 'none',
               onSubmitEditing: () => emailRef.current.focus()
@@ -125,6 +140,18 @@ const SignUpScreen = ({ navigation }: IProps) => {
             inputRef={passwordRef}
             status={passwordWarning}
             onChangeText={(text) => setUser({ ...user, password: text })}
+            inputProps={{
+              onBlur: verifyPassword,
+              secureTextEntry: true,
+              returnKeyType: 'done'
+            }}
+          />
+          <MainTextInput
+            value={confirmPsswd}
+            label="Confirmar senha"
+            inputRef={confirmPsswdRef}
+            status={confirmPsswdWarning}
+            onChangeText={(text) => setconfirmPsswd(text)}
             inputProps={{
               onBlur: verifyPassword,
               secureTextEntry: true,
