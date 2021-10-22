@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-// Componentes
-import MainHeader from '../components/MainHeader';
 import ProductList from '../components/ProductList';
 import { ApplicationReducer, getListProducts } from '../redux';
 import services from '../service/service';
 import requester from '../service/requester';
 import MainContainer from '../components/MainContainer';
 import MainContent from '../components/MainContent';
-import { NavigationProp } from '../utils/types';
+import { MainNavigationProp, RequesterResponseModel } from '../utils/types';
 
 interface IHomeProps {
-  navigation: NavigationProp;
+  navigation: MainNavigationProp;
 }
 
 const HomeScreen = ({ navigation }: IHomeProps) => {
@@ -26,8 +23,8 @@ const HomeScreen = ({ navigation }: IHomeProps) => {
   const getProducts = async () => {
     setLoading(true);
     const { getListProducts: service } = services;
-    const result = await requester(service);
-    dispatch(getListProducts(result));
+    const result: RequesterResponseModel = await requester(service);
+    dispatch(getListProducts(result.data));
     setLoading(false);
   };
 

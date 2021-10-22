@@ -1,3 +1,4 @@
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 export enum RequesterMethodEnum {
@@ -13,6 +14,18 @@ export type RequesterServiceModel = {
   endpoint: string;
 };
 
+export type RequesterResponseModel = {
+  success: boolean;
+  status?: number;
+  error: any;
+  data: any;
+};
+
+export type RequesterOptionsModel = {
+  data?: any;
+  headers?: any;
+};
+
 export type ProductModel = {
   id: string;
   name: string;
@@ -23,19 +36,37 @@ export type ProductModel = {
   updatedAt: string;
 };
 
-export type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+export type UserModel = {
+  user: {
+    id?: string;
+    name: string;
+    email: string;
+    password: string;
+    avatar?: string | null;
+    createdAt?: string;
+    updatedAt?: string;
+  };
+  token: string
+};
+
+export type NavigationProp = StackNavigationProp<StackParamList, 'MainHome'>;
+export type MainNavigationProp = StackNavigationProp<MainParamList, 'Home'>;
 
 export type StackParamList = {
-  Home: undefined;
+  MainHome: MainParamList;
   Login: undefined;
-  SignIn: undefined;
+  SignUp: undefined;
   Profile: undefined;
   EditProfile: undefined;
   MyProducts: undefined;
-  Product: undefined;
   Menu: undefined;
   CreateProduct: undefined;
   EditProduct: undefined;
+};
+
+export type MainParamList = {
+  Home: NavigatorScreenParams<StackParamList>;
+  Product: undefined;
 };
 
 export enum IVerifyField {

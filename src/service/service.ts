@@ -1,14 +1,19 @@
 import { RequesterMethodEnum, RequesterServiceModel } from '../utils/types';
 
 interface Services {
-    getListProducts: RequesterServiceModel;
+  userLogin: RequesterServiceModel;
+  getListProducts: RequesterServiceModel;
 }
 
 const services: Services = {
-    getListProducts: {
-        method: RequesterMethodEnum.GET,
-        endpoint: 'products'
-    }
+  userLogin: {
+    method: RequesterMethodEnum.POST,
+    endpoint: 'login'
+  },
+  getListProducts: {
+    method: RequesterMethodEnum.GET,
+    endpoint: 'products'
+  }
 };
 
 export default services;
