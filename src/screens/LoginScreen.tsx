@@ -83,7 +83,7 @@ const LoginScreen = ({ navigation }: IProps) => {
       if (result.success) {
         dispatch(userActions.getUserProfile(result.data));
         setModalLogged(true);
-        navigation.navigate('Profile');
+        navigation.replace('Profile');
       } else {
         console.warn('Erro');
         console.log(result.data);
