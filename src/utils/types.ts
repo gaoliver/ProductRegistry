@@ -25,13 +25,13 @@ export type ProductModel = {
 };
 
 export type UserModel = {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   password: string;
-  avatar: string | null;
-  createdAt: string;
-  updatedAt: string;
+  avatar?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type NavigationProp = StackNavigationProp<StackParamList, 'MainHome'>;
