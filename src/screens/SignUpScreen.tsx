@@ -83,8 +83,10 @@ const SignUpScreen = ({ navigation }: IProps) => {
     }
 
     if (emailOk && passwordOk && nameOk && confirmPsswdOk) {
+      setLoading(true);
       setTimeout(() => {
-        console.warn('Contta criada!');
+        setLoading(false);
+        console.warn('Conta criada!');
       }, 3000);
     }
   };

@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const LoginScreen = ({ navigation }: IProps) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -54,7 +54,9 @@ const LoginScreen = ({ navigation }: IProps) => {
     }
 
     if (emailOk && passwordOk) {
+      setLoading(true);
       setTimeout(() => {
+        setLoading(false);
         console.warn('Login realizado!');
       }, 3000);
     }
@@ -116,7 +118,11 @@ const LoginScreen = ({ navigation }: IProps) => {
             }}
           />
           <View style={styles.buttonsField}>
-            <MainButton text="Login" onPress={verifyFields} isLoading={loading} />
+            <MainButton
+              text="Login"
+              onPress={verifyFields}
+              isLoading={loading}
+            />
             <CheckboxInput
               label="Lembrar-se"
               style={{ marginTop: 15, marginBottom: 25 }}
