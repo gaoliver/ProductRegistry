@@ -10,6 +10,7 @@ import MainTextInput from '../components/MainTextInput';
 import MainButton from '../components/MainButton';
 import Colors from '../constants/Colors';
 import MainBox from '../components/MainBox';
+import CheckboxInput from '../components/CheckboxInput';
 
 interface IProps {
   navigation: StackNavigationProp<StackParamList, 'Login'>;
@@ -18,6 +19,7 @@ interface IProps {
 const LoginScreen = ({ navigation }: IProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
 
   const [emailWarning, setEmailWarning] = useState<IVerifyField>();
   const [passwordWarning, setPasswordWarning] = useState<IVerifyField>();
@@ -55,6 +57,14 @@ const LoginScreen = ({ navigation }: IProps) => {
     }
   };
 
+  const handleRememberAccount = () => {
+    if (remember) {
+      setRemember(false);
+    } else {
+      setRemember(true);
+    }
+  };
+
   const styles = StyleSheet.create({
     content: {
       paddingTop: 150,
@@ -65,8 +75,7 @@ const LoginScreen = ({ navigation }: IProps) => {
       marginTop: 10
     },
     signUp: {
-      marginTop: 20,
-      alignSelf: 'flex-end'
+      alignSelf: 'center'
     }
   });
 
@@ -105,6 +114,12 @@ const LoginScreen = ({ navigation }: IProps) => {
           />
           <View style={styles.buttonsField}>
             <MainButton text="Login" onPress={verifyFields} />
+            <CheckboxInput
+              label="Lembrar-se"
+              style={{ marginTop: 15, marginBottom: 25 }}
+              checked={remember}
+              onPress={handleRememberAccount}
+            />
             <Text style={styles.signUp}>
               Ainda não tem conta?{' '}
               <Text

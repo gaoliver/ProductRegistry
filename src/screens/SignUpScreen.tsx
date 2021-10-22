@@ -18,8 +18,7 @@ const SignUpScreen = ({ navigation }: IProps) => {
   const [user, setUser] = useState<UserModel>({
     name: '',
     email: '',
-    password: '',
-    avatar: ''
+    password: ''
   });
   const [confirmPsswd, setconfirmPsswd] = useState('');
 
@@ -89,7 +88,7 @@ const SignUpScreen = ({ navigation }: IProps) => {
 
   const styles = StyleSheet.create({
     content: {
-      paddingTop: 150,
+      paddingTop: 100,
       alignItems: 'center'
     },
     buttonsField: {
@@ -100,7 +99,7 @@ const SignUpScreen = ({ navigation }: IProps) => {
 
   return (
     <MainContainer>
-      <LimitHeader title="Sign Up" />
+      <LimitHeader title="Cadastro" />
       <MainContent contentStyle={styles.content}>
         <MainBox>
           <MainTextInput
