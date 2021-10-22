@@ -43,6 +43,7 @@ const MainButton = (props: IProps) => {
   const styles = StyleSheet.create({
     container: {
       width: fullWidth ? '100%' : width,
+      minHeight:40,
       paddingVertical: 10,
       paddingHorizontal: 15,
       justifyContent: 'center',
@@ -54,6 +55,9 @@ const MainButton = (props: IProps) => {
       fontSize: 16,
       fontWeight: 'bold',
       color: Colors.light.accentText
+    },
+    spinner: {
+      height: 0
     }
   });
 
@@ -64,7 +68,7 @@ const MainButton = (props: IProps) => {
       activeOpacity={0.8}
     >
       {isLoading ? (
-        <Spinner size={10} />
+        <Spinner size={10} style={styles.spinner} />
       ) : (
         <Text style={styles.text}>{text}</Text>
       )}
