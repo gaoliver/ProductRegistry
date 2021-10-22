@@ -1,3 +1,4 @@
+import { Spinner } from 'native-base';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
@@ -7,17 +8,19 @@ interface IProps {
   onPress?: () => void;
   type?: 'primary' | 'accent' | 'other';
   color?: string;
+  isLoading?: boolean;
 }
 
 const translate = (props: IProps) => ({
   text: props.text ? props.text : 'Button',
-  onPress: props.onPress ? props.onPress : () => {},
   type: props.type ? props.type : 'other',
-  color: props.color ? props.color : Colors.colors.primary
+  color: props.color ? props.color : Colors.colors.primary,
+  onPress: props.onPress ? props.onPress : () => {},
+  isLoading: props.isLoading ? props.isLoading : false
 });
 
 const MainButton = (props: IProps) => {
-  const { text, onPress, type, color } = translate(props);
+  const { text, onPress, type, color, isLoading } = translate(props);
 
   const getType = () => {
     switch (type) {
@@ -54,7 +57,7 @@ const MainButton = (props: IProps) => {
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <Text style={styles.text}>{text}</Text>
+      {isLoading ? <Spinner size={10} /> : <Text style={styles.text}>{text}</Text>}
     </TouchableOpacity>
   );
 };

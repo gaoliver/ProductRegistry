@@ -15,6 +15,7 @@ interface IProps {
 }
 
 const SignUpScreen = ({ navigation }: IProps) => {
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<UserModel>({
     name: '',
     email: '',
@@ -82,7 +83,9 @@ const SignUpScreen = ({ navigation }: IProps) => {
     }
 
     if (emailOk && passwordOk && nameOk && confirmPsswdOk) {
-      console.warn('Account created!');
+      setTimeout(() => {
+        console.warn('Contta criada!');
+      }, 3000);
     }
   };
 
@@ -152,13 +155,17 @@ const SignUpScreen = ({ navigation }: IProps) => {
             status={confirmPsswdWarning}
             onChangeText={(text) => setconfirmPsswd(text)}
             inputProps={{
-              onBlur: verifyPassword,
+              onBlur: verifyConfirmPsswd,
               secureTextEntry: true,
               returnKeyType: 'done'
             }}
           />
           <View style={styles.buttonsField}>
-            <MainButton text="Finish" onPress={verifyFields} />
+            <MainButton
+              text="Finish"
+              onPress={verifyFields}
+              isLoading={loading}
+            />
           </View>
         </MainBox>
       </MainContent>
