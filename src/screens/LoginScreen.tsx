@@ -1,16 +1,25 @@
 import React, { useRef, useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
+import * as userActions from '../redux/actions/userActions';
 import LimitHeader from '../components/LimitHeader';
 import MainContainer from '../components/MainContainer';
 import MainContent from '../components/MainContent';
-import { IVerifyField, StackParamList } from '../utils/types';
+import {
+  IVerifyField,
+  RequesterResponseModel,
+  StackParamList
+} from '../utils/types';
 import MainTextInput from '../components/MainTextInput';
 import MainButton from '../components/MainButton';
 import Colors from '../constants/Colors';
 import MainBox from '../components/MainBox';
 import CheckboxInput from '../components/CheckboxInput';
+import services from '../service/service';
+import requester from '../service/requester';
+import AlertBox from '../components/AlertBox';
 
 interface IProps {
   navigation: StackNavigationProp<StackParamList, 'Login'>;
@@ -18,9 +27,14 @@ interface IProps {
 
 const LoginScreen = ({ navigation }: IProps) => {
   const [loading, setLoading] = useState(false);
+  const [modalLogged, setModalLogged] = useState(false);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
+
+  const [emailValidator, setEmailValidator] = useState('');
+  const [passwordValidator, setPasswordValidator] = useState('');
 
   const [emailWarning, setEmailWarning] = useState<IVerifyField>();
   const [passwordWarning, setPasswordWarning] = useState<IVerifyField>();
@@ -35,7 +49,7 @@ const LoginScreen = ({ navigation }: IProps) => {
     setPasswordWarning(IVerifyField.empty);
   };
 
-  const verifyFields = () => {
+  const verifyFields = async () => {
     let emailOk;
     let passwordOk;
 
@@ -55,10 +69,36 @@ const LoginScreen = ({ navigation }: IProps) => {
 
     if (emailOk && passwordOk) {
       setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        console.warn('Login realizado!');
-      }, 3000);
+
+      const { userLogin } = services;
+      const options = {
+        data: { email: email, password: password },
+        headers: { 'Content-Type': 'application/json' }
+      };
+      const result: RequesterResponseModel = await requester(
+        userLogin,
+        options
+      );
+
+      if (result.success) {
+        dispatch(userActions.getUserProfile(result.data));
+        setModalLogged(true);
+        navigation.navigate('Profile');
+      } else {
+        console.warn('Erro');
+        console.log(result.data);
+        if (result.data?.validation?.body?.message?.includes('email')) {
+          setEmailValidator('E-mail inválido.');
+          setEmailWarning(IVerifyField.wrong);
+        } else if (result.data?.message?.includes('Incorrect')) {
+          setEmailValidator('E-mail ou senha inválidos.');
+          setPasswordValidator('E-mail ou senha inválidos.');
+          setEmailWarning(IVerifyField.wrong);
+          setPasswordWarning(IVerifyField.wrong);
+        }
+      }
+
+      setLoading(false);
     }
   };
 
@@ -94,6 +134,7 @@ const LoginScreen = ({ navigation }: IProps) => {
             label="E-mail"
             inputRef={emailRef}
             status={emailWarning}
+            warningMessage={emailValidator}
             onChangeText={(text) => setEmail(text)}
             inputProps={{
               onBlur: verifyEmail,
@@ -110,6 +151,7 @@ const LoginScreen = ({ navigation }: IProps) => {
             label="Senha"
             inputRef={passwordRef}
             status={passwordWarning}
+            warningMessage={passwordValidator}
             onChangeText={(text) => setPassword(text)}
             inputProps={{
               onBlur: verifyPassword,
@@ -142,6 +184,13 @@ const LoginScreen = ({ navigation }: IProps) => {
           </View>
         </MainBox>
       </MainContent>
+
+      <AlertBox
+        isVisible={modalLogged}
+        message="Usuário logado com sucesso!"
+        hideButton="both"
+        onDismiss={() => setModalLogged(false)}
+      />
     </MainContainer>
   );
 };

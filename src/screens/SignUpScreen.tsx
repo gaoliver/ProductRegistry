@@ -16,7 +16,7 @@ interface IProps {
 
 const SignUpScreen = ({ navigation }: IProps) => {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<UserModel>({
+  const [user, setUser] = useState({
     name: '',
     email: '',
     password: ''

@@ -9,6 +9,8 @@ interface IProps {
   type?: 'primary' | 'accent' | 'other';
   color?: string;
   isLoading?: boolean;
+  fullWidth?: boolean;
+  width?: any;
 }
 
 const translate = (props: IProps) => ({
@@ -16,11 +18,14 @@ const translate = (props: IProps) => ({
   type: props.type ? props.type : 'other',
   color: props.color ? props.color : Colors.colors.primary,
   onPress: props.onPress ? props.onPress : () => {},
-  isLoading: props.isLoading ? props.isLoading : false
+  isLoading: props.isLoading ? props.isLoading : false,
+  fullWidth: props.fullWidth ? props.fullWidth : false,
+  width: props.width ? props.width : 'auto'
 });
 
 const MainButton = (props: IProps) => {
-  const { text, onPress, type, color, isLoading } = translate(props);
+  const { text, onPress, type, color, isLoading, fullWidth, width } =
+    translate(props);
 
   const getType = () => {
     switch (type) {
@@ -37,8 +42,9 @@ const MainButton = (props: IProps) => {
 
   const styles = StyleSheet.create({
     container: {
-      width: '100%',
-      height: 40,
+      width: fullWidth ? '100%' : width,
+      paddingVertical: 10,
+      paddingHorizontal: 15,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: getType(),
@@ -57,7 +63,11 @@ const MainButton = (props: IProps) => {
       onPress={onPress}
       activeOpacity={0.8}
     >
-      {isLoading ? <Spinner size={10} /> : <Text style={styles.text}>{text}</Text>}
+      {isLoading ? (
+        <Spinner size={10} />
+      ) : (
+        <Text style={styles.text}>{text}</Text>
+      )}
     </TouchableOpacity>
   );
 };

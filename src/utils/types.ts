@@ -14,6 +14,18 @@ export type RequesterServiceModel = {
   endpoint: string;
 };
 
+export type RequesterResponseModel = {
+  success: boolean;
+  status?: number;
+  error: any;
+  data: any;
+};
+
+export type RequesterOptionsModel = {
+  data?: any;
+  headers?: any;
+};
+
 export type ProductModel = {
   id: string;
   name: string;
@@ -25,13 +37,16 @@ export type ProductModel = {
 };
 
 export type UserModel = {
-  id?: string;
-  name: string;
-  email: string;
-  password: string;
-  avatar?: string | null;
-  createdAt?: string;
-  updatedAt?: string;
+  user: {
+    id?: string;
+    name: string;
+    email: string;
+    password: string;
+    avatar?: string | null;
+    createdAt?: string;
+    updatedAt?: string;
+  };
+  token: string
 };
 
 export type NavigationProp = StackNavigationProp<StackParamList, 'MainHome'>;
