@@ -20,7 +20,7 @@ const requester: any = async (
     baseURL: 'http://localhost:3001',
     url: endpoint,
     data: options.data,
-    headers: options.headers
+    headers: options.headers,
   };
 
   return axios

@@ -2,13 +2,23 @@ import React, { useRef, useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StyleSheet, View } from 'react-native';
 
+import * as userActions from '../redux/actions/userActions';
 import LimitHeader from '../components/LimitHeader';
 import MainContainer from '../components/MainContainer';
 import MainContent from '../components/MainContent';
-import { IVerifyField, StackParamList, UserModel } from '../utils/types';
+import {
+  IVerifyField,
+  RequesterResponseModel,
+  StackParamList,
+  UserModel
+} from '../utils/types';
 import MainTextInput from '../components/MainTextInput';
 import MainButton from '../components/MainButton';
 import MainBox from '../components/MainBox';
+import requester from '../service/requester';
+import services from '../service/service';
+import { useDispatch } from 'react-redux';
+import AlertBox from '../components/AlertBox';
 
 interface IProps {
   navigation: StackNavigationProp<StackParamList, 'Login'>;
@@ -16,12 +26,17 @@ interface IProps {
 
 const SignUpScreen = ({ navigation }: IProps) => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [networkError, setNetworkError] = useState(false);
   const [user, setUser] = useState({
     name: '',
     email: '',
     password: ''
   });
   const [confirmPsswd, setconfirmPsswd] = useState('');
+
+  const [emailValidator, setEmailValidator] = useState('');
+  const [confirmPsswdValidator, setConfirmPsswdValidator] = useState('');
 
   const [nameWarning, setNameWarning] = useState<IVerifyField>();
   const [emailWarning, setEmailWarning] = useState<IVerifyField>();
@@ -48,11 +63,59 @@ const SignUpScreen = ({ navigation }: IProps) => {
     setConfirmPsswdWarning(IVerifyField.empty);
   };
 
+  const handleLogin = async () => {
+    const { userLogin } = services;
+    const options = {
+      data: { email: user.email, password: user.password },
+      headers: { 'Content-Type': 'application/json' }
+    };
+    const result: RequesterResponseModel = await requester(userLogin, options);
+
+    if (result.success) {
+      dispatch(userActions.getUserProfile(result.data));
+      navigation.replace('Profile');
+    } else {
+      console.warn('Erro');
+      console.log(result.error);
+    }
+  };
+
+  const handleCreateUser = async () => {
+    setLoading(true);
+
+    const { userSignUp } = services;
+    const options = {
+      data: user,
+      headers: { 'Content-Type': 'application/json' }
+    };
+    const result: RequesterResponseModel = await requester(userSignUp, options);
+
+    if (result.success) {
+      handleLogin();
+    } else {
+      console.warn('Erro');
+      console.log(result.data);
+      if (result.data?.message?.includes('email')) {
+        setEmailValidator('Este e-mail já está cadastrado.');
+        setEmailWarning(IVerifyField.wrong);
+      } else if (result.error.toLowerCase().includes('network')) {
+        setNetworkError(true);
+      }
+    }
+
+    setLoading(false);
+  };
+
   const verifyFields = () => {
     let nameOk;
     let emailOk;
     let passwordOk;
     let confirmPsswdOk;
+
+    setNameWarning(IVerifyField.empty);
+    setEmailWarning(IVerifyField.empty);
+    setPasswordWarning(IVerifyField.empty);
+    setConfirmPsswdWarning(IVerifyField.empty);
 
     if (user.name === '') {
       setNameWarning(IVerifyField.wrong);
@@ -78,16 +141,17 @@ const SignUpScreen = ({ navigation }: IProps) => {
     if (confirmPsswd === '') {
       setConfirmPsswdWarning(IVerifyField.wrong);
       confirmPsswdOk = false;
+    }
+    if (confirmPsswd !== user.password) {
+      setConfirmPsswdWarning(IVerifyField.wrong);
+      setConfirmPsswdValidator('As senhas devem ser iguais.');
+      confirmPsswdOk = false;
     } else {
       confirmPsswdOk = true;
     }
 
     if (emailOk && passwordOk && nameOk && confirmPsswdOk) {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        console.warn('Conta criada!');
-      }, 3000);
+      handleCreateUser();
     }
   };
 
@@ -127,7 +191,12 @@ const SignUpScreen = ({ navigation }: IProps) => {
             label="E-mail"
             inputRef={emailRef}
             status={emailWarning}
-            onChangeText={(text) => setUser({ ...user, email: text })}
+            warningMessage={emailValidator}
+            onChangeText={(text) => {
+              setUser({ ...user, email: text });
+              setEmailValidator('');
+              setEmailWarning(IVerifyField.empty);
+            }}
             inputProps={{
               onBlur: verifyEmail,
               autoCompleteType: 'email',
@@ -155,7 +224,12 @@ const SignUpScreen = ({ navigation }: IProps) => {
             label="Confirmar senha"
             inputRef={confirmPsswdRef}
             status={confirmPsswdWarning}
-            onChangeText={(text) => setconfirmPsswd(text)}
+            warningMessage={confirmPsswdValidator}
+            onChangeText={(text) => {
+              setconfirmPsswd(text);
+              setConfirmPsswdValidator('');
+              setConfirmPsswdWarning(IVerifyField.empty);
+            }}
             inputProps={{
               onBlur: verifyConfirmPsswd,
               secureTextEntry: true,
@@ -171,6 +245,14 @@ const SignUpScreen = ({ navigation }: IProps) => {
           </View>
         </MainBox>
       </MainContent>
+
+      <AlertBox
+        isVisible={networkError}
+        title="Erro ao cadastrar"
+        message="Ocorreu um erro ao tentar cadastrar. Verifique sua internet e tente novamente."
+        hideButton="both"
+        onDismiss={() => setNetworkError(false)}
+      />
     </MainContainer>
   );
 };

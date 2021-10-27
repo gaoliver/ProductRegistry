@@ -28,6 +28,7 @@ interface IProps {
 const LoginScreen = ({ navigation }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [modalLogged, setModalLogged] = useState(false);
+  const [networkError, setNetworkError] = useState(false);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -86,7 +87,7 @@ const LoginScreen = ({ navigation }: IProps) => {
         navigation.replace('Profile');
       } else {
         console.warn('Erro');
-        console.log(result.data);
+        console.log(result.error);
         if (result.data?.validation?.body?.message?.includes('email')) {
           setEmailValidator('E-mail inválido.');
           setEmailWarning(IVerifyField.wrong);
@@ -95,6 +96,8 @@ const LoginScreen = ({ navigation }: IProps) => {
           setPasswordValidator('E-mail ou senha inválidos.');
           setEmailWarning(IVerifyField.wrong);
           setPasswordWarning(IVerifyField.wrong);
+        } else if (result.error.toLowerCase().includes('network')) {
+          setNetworkError(true)
         }
       }
 
@@ -190,6 +193,13 @@ const LoginScreen = ({ navigation }: IProps) => {
         message="Usuário logado com sucesso!"
         hideButton="both"
         onDismiss={() => setModalLogged(false)}
+      />
+      <AlertBox
+        isVisible={networkError}
+        title="Erro ao conectar"
+        message="Verifique sua conexão com a internet e tente novamente."
+        hideButton="both"
+        onDismiss={() => setNetworkError(false)}
       />
     </MainContainer>
   );

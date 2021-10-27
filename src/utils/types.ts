@@ -1,4 +1,5 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 export enum RequesterMethodEnum {
@@ -46,14 +47,15 @@ export type UserModel = {
     createdAt?: string;
     updatedAt?: string;
   };
-  token: string
+  token: string;
 };
 
 export type NavigationProp = StackNavigationProp<StackParamList, 'MainHome'>;
 export type MainNavigationProp = StackNavigationProp<MainParamList, 'Home'>;
+export type ScreenNavigationProp = NativeStackScreenProps<StackParamList>;
 
 export type StackParamList = {
-  MainHome: MainParamList;
+  MainHome: MainParamList | undefined;
   Login: undefined;
   SignUp: undefined;
   Profile: undefined;

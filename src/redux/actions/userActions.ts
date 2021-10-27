@@ -3,7 +3,7 @@ import { UserModel } from '../../utils/types';
 
 export interface GetUserProfile {
     readonly type: 'ON_GET_USER_PROFILE';
-    payload: Array<UserModel>;
+    payload: UserModel | undefined;
 }
 
 export interface ErrorActionUser {
@@ -13,7 +13,7 @@ export interface ErrorActionUser {
 
 export type UserAction = GetUserProfile | ErrorActionUser;
 
-export const getUserProfile = (value: Array<UserModel>) => {
+export const getUserProfile = (value: UserModel | undefined) => {
     return async (dispatch: Dispatch<UserAction>) => {
         try {
             dispatch({

@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-interface IProps {
+interface IMainBoxProps {
   boxStyle?: StyleProp<ViewStyle>;
 }
 
-const MainBox: React.FC<IProps> = ({ boxStyle, children }) => {
+const MainBox: React.FC<IMainBoxProps> = ({ boxStyle, children }) => {
   return <View style={[styles.form, boxStyle]}>{children}</View>;
 };
 
