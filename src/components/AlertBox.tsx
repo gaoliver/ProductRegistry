@@ -1,12 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import ReactNativeModal from 'react-native-modal';
 import Colors from '../constants/Colors';
-import MainBox from './MainBox';
 import MainButton from './MainButton';
 import ModalBox from './ModalBox';
 
-interface IProps {
+interface IAlertBoxProps {
   isVisible: boolean;
   title?: string;
   message?: string;
@@ -17,7 +15,7 @@ interface IProps {
   onCancel?: () => void;
 }
 
-const translator = (props: IProps) => ({
+const translator = (props: IAlertBoxProps) => ({
   isVisible: props.isVisible ? props.isVisible : false,
   title: props.title ? props.title : '',
   message: props.message ? props.message : '',
@@ -28,7 +26,7 @@ const translator = (props: IProps) => ({
   onCancel: props.onCancel ? props.onCancel : () => {}
 });
 
-const AlertBox = (props: IProps) => {
+const AlertBox = (props: IAlertBoxProps) => {
   const {
     isVisible,
     title,

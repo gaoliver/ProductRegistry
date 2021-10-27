@@ -8,12 +8,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../constants/Colors';
 import { StackParamList } from '../utils/types';
 
-type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
-interface IProps {
+type NavigationProp = StackNavigationProp<StackParamList, 'MainHome'>;
+interface ILimitHeaderProps {
   title: string;
 }
 
-const LimitHeader: React.FC<IProps> = ({ title, children }) => {
+const LimitHeader: React.FC<ILimitHeaderProps> = ({ title, children }) => {
   const navigation = useNavigation<NavigationProp>();
 
   const onGoBack = () => {

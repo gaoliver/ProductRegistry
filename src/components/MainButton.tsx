@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
 
-interface IProps {
+interface IMainButtonProps {
   text: string;
   onPress?: () => void;
   type?: 'primary' | 'accent' | 'other';
@@ -13,7 +13,7 @@ interface IProps {
   width?: any;
 }
 
-const translate = (props: IProps) => ({
+const translate = (props: IMainButtonProps) => ({
   text: props.text ? props.text : 'Button',
   type: props.type ? props.type : 'other',
   color: props.color ? props.color : Colors.colors.primary,
@@ -23,7 +23,7 @@ const translate = (props: IProps) => ({
   width: props.width ? props.width : 'auto'
 });
 
-const MainButton = (props: IProps) => {
+const MainButton = (props: IMainButtonProps) => {
   const { text, onPress, type, color, isLoading, fullWidth, width } =
     translate(props);
 

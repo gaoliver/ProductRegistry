@@ -11,19 +11,19 @@ import { AntDesign } from '@expo/vector-icons';
 
 import MainBox from './MainBox';
 
-interface IProps {
+interface IModalBoxProps {
   isVisible: boolean;
   onDismiss: () => void;
   boxStyle?: StyleProp<ViewStyle>;
 }
 
-const translator = (props: IProps) => ({
+const translator = (props: IModalBoxProps) => ({
   isVisible: props.isVisible ? props.isVisible : false,
   boxStyle: props.boxStyle ? props.boxStyle : {},
   onDismiss: props.onDismiss ? props.onDismiss : () => {}
 });
 
-const ModalBox: React.FC<IProps> = (props) => {
+const ModalBox: React.FC<IModalBoxProps> = (props) => {
   const { isVisible, onDismiss, boxStyle } = translator(props);
 
   return (

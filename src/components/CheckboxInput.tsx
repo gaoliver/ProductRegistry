@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import Colors from '../constants/Colors';
 
-interface IProps {
+interface ICheckboxInputProps {
   label: string;
   checked?: boolean;
   color?: string;
@@ -11,7 +11,7 @@ interface IProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const translate = (props: IProps) => ({
+const translate = (props: ICheckboxInputProps) => ({
   label: props.label ? props.label : '',
   checked: props.checked ? props.checked : false,
   color: props.color ? props.color : Colors.colors.primary,
@@ -19,7 +19,7 @@ const translate = (props: IProps) => ({
   style: props.style ? props.style : {}
 });
 
-const CheckboxInput = (props: IProps) => {
+const CheckboxInput = (props: ICheckboxInputProps) => {
   const { label, checked, color, onPress, style } = translate(props);
 
   return (

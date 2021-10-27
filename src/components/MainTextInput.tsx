@@ -9,7 +9,7 @@ import {
 import Colors from '../constants/Colors';
 import { IVerifyField } from '../utils/types';
 
-interface IProps {
+interface IMainTextInputProps {
   value: string;
   label?: string;
   status?: IVerifyField;
@@ -19,7 +19,7 @@ interface IProps {
   inputProps?: TextInputProps;
 }
 
-const translate = (props: IProps) => ({
+const translate = (props: IMainTextInputProps) => ({
   value: props.value ? props.value : '',
   label: props.label ? props.label : '',
   status: props.status ? props.status : IVerifyField.empty,
@@ -31,7 +31,7 @@ const translate = (props: IProps) => ({
   inputProps: props.inputProps
 });
 
-const MainTextInput = (props: IProps) => {
+const MainTextInput = (props: IMainTextInputProps) => {
   const {
     value,
     label,

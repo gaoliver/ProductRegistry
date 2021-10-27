@@ -6,12 +6,18 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 
-interface Props {
+interface IMainHeaderProps {
   title?: string | null;
   onPress: () => void;
 }
 
-const MainHeader = ({ title, onPress, ...props }: Props) => {
+const translator = (props: IMainHeaderProps) => ({
+  title: props.title ? props.title : '',
+  onPress: props.onPress ? props.onPress : () => {}
+});
+
+const MainHeader = (props: IMainHeaderProps) => {
+  const {title, onPress} = translator(props)
   const logo = require('../../assets/adaptive-icon.png');
 
   const styles = StyleSheet.create({

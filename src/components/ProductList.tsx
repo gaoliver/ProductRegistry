@@ -12,12 +12,19 @@ interface Products {
   updatedAt: string;
 }
 
-interface Props {
+interface IProductListProps {
   products: Array<Products>;
   onPress: () => void;
 }
 
-const ProductList = ({ products, onPress }: Props) => {
+const translate = (props: IProductListProps) => ({
+  products: props.products ? props.products : [],
+  onPress: props.onPress ? props.onPress : () => {}
+});
+
+const ProductList = (props: IProductListProps) => {
+  const { products, onPress } = translate(props);
+
   const styles = StyleSheet.create({
     list: {
       width: '100%'
