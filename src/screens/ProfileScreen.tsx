@@ -12,8 +12,13 @@ import { UserModel } from '../utils/types';
 
 const ProfileScreen = () => {
   const user = useSelector(
-    (state: ApplicationReducer) => state.userReducer.user.user
+    (state: ApplicationReducer) => state.userReducer?.user?.user
   );
+
+  const translator = {
+    name: user?.name ? user.name : '',
+    email: user?.email ? user.email : ''
+  };
 
   const styles = StyleSheet.create({
     boxContainer: {
@@ -42,19 +47,19 @@ const ProfileScreen = () => {
 
   return (
     <MainContainer>
-      <LimitHeader title={user.name} />
+      <LimitHeader title={translator.name} />
       <MainContent>
         <MainBox boxStyle={styles.boxContainer}>
           <View style={styles.infoArea}>
             <Text style={styles.infoLabel}>Nome:</Text>
             <View style={styles.textDataContainer}>
-              <Text style={styles.textData}>{user.name}</Text>
+              <Text style={styles.textData}>{translator.name}</Text>
             </View>
           </View>
           <View style={[styles.infoArea, { marginTop: 30 }]}>
             <Text style={styles.infoLabel}>E-mail:</Text>
             <View style={styles.textDataContainer}>
-              <Text style={styles.textData}>{user.email}</Text>
+              <Text style={styles.textData}>{translator.email}</Text>
             </View>
           </View>
         </MainBox>

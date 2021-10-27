@@ -2,7 +2,7 @@ import { UserModel } from '../../utils/types';
 import { UserAction } from '../actions/userActions';
 
 type UserStateModel = {
-  user: UserModel;
+  user: UserModel | undefined;
 };
 
 const initialState: UserStateModel = {
@@ -17,7 +17,7 @@ export const UserReducer = (
     case 'ON_GET_USER_PROFILE':
       return {
         ...state,
-        user: action.payload[0]
+        user: action.payload
       };
     default:
       return state;
