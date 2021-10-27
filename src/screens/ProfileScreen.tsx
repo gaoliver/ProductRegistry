@@ -1,16 +1,21 @@
-import React from 'react';
+import { Footer } from 'native-base';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import * as userActions from '../redux/actions/userActions';
 import LimitHeader from '../components/LimitHeader';
 import MainBox from '../components/MainBox';
+import MainButton from '../components/MainButton';
 import MainContainer from '../components/MainContainer';
 import MainContent from '../components/MainContent';
 import Colors from '../constants/Colors';
 import { ApplicationReducer } from '../redux';
-import { UserModel } from '../utils/types';
+import { ScreenNavigationProp } from '../utils/types';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }: ScreenNavigationProp) => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const user = useSelector(
     (state: ApplicationReducer) => state.userReducer?.user?.user
   );
@@ -18,6 +23,13 @@ const ProfileScreen = () => {
   const translator = {
     name: user?.name ? user.name : '',
     email: user?.email ? user.email : ''
+  };
+
+  const handleLogout = () => {
+    setLoading(true);
+    dispatch(userActions.getUserProfile(undefined));
+    setLoading(false);
+    return navigation.navigate('MainHome');
   };
 
   const styles = StyleSheet.create({
@@ -42,6 +54,13 @@ const ProfileScreen = () => {
     },
     textData: {
       color: Colors.light.text
+    },
+    footer: {
+      height: 100,
+      width: '100%',
+      flexDirection: 'column',
+      paddingHorizontal: 20,
+      justifyContent: 'space-evenly'
     }
   });
 
@@ -64,6 +83,15 @@ const ProfileScreen = () => {
           </View>
         </MainBox>
       </MainContent>
+      <Footer style={styles.footer}>
+        <MainButton text="Editar" />
+        <MainButton
+          text="Sair"
+          type="accent"
+          isLoading={loading}
+          onPress={handleLogout}
+        />
+      </Footer>
     </MainContainer>
   );
 };
